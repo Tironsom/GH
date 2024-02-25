@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Waves" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e9bb1a27-f975-4aa4-98f9-75524c5daafa">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    q.Numero_quarto,
+    q.preco,
+    q.id_hotel,
+    h.Nome AS nome_hotel,
+    total_quartos_por_hotel.quartos_por_hotel,
+    total_quartos_registrados.total_quartos_registrados
+FROM quartos q
+INNER JOIN hotel h ON q.id_hotel = h.id_hotel
+INNER JOIN (
+    SELECT id_hotel, COUNT(Numero_quarto) AS quartos_por_hotel
+    FROM quartos
+    GROUP BY id_hotel
+) AS total_quartos_por_hotel ON h.id_hotel = total_quartos_por_hotel.id_hotel
+CROSS JOIN (
+    SELECT COUNT(*) AS total_quartos_registrados
+    FROM quartos
+) AS total_quartos_registrados;]]>
+	</queryString>
+	<field name="Numero_quarto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Numero_quarto"/>
+		<property name="com.jaspersoft.studio.field.label" value="Numero_quarto"/>
+	</field>
+	<field name="preco" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="preco"/>
+		<property name="com.jaspersoft.studio.field.label" value="preco"/>
+	</field>
+	<field name="id_hotel" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_hotel"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_hotel"/>
+	</field>
+	<field name="nome_hotel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nome_hotel"/>
+		<property name="com.jaspersoft.studio.field.label" value="nome_hotel"/>
+	</field>
+	<field name="quartos_por_hotel" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="quartos_por_hotel"/>
+		<property name="com.jaspersoft.studio.field.label" value="quartos_por_hotel"/>
+	</field>
+	<field name="total_quartos_registrados" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="total_quartos_registrados"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_quartos_registrados"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{Numero_quarto}]]></groupExpression>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{preco}]]></groupExpression>
+	</group>
+	<group name="id_hotel">
+		<groupExpression><![CDATA[$F{id_hotel}]]></groupExpression>
+	</group>
+	<title>
+		<band height="205" splitType="Stretch">
+			<rectangle>
+				<reportElement x="20" y="125" width="207" height="30" uuid="61b3be1e-7e47-4c06-8a5f-3055b6e9931b"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="555" height="80" uuid="524767a9-e7e5-4041-9b08-5a7210b38e22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="54" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tabela quartos]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="20" y="90" width="207" height="35" forecolor="#BABABA" backcolor="#9C9494" uuid="d9bc9ed2-d5a3-4591-852c-bbcba39469f8"/>
+				<graphicElement>
+					<pen lineWidth="1.0" lineColor="#0A0101"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="95" width="199" height="30" uuid="e553234a-1ce5-4004-9ac6-e992775485fc"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Total de quartos no sistema:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="125" width="44" height="30" uuid="ed67a76c-37f1-4e46-996c-594b5cc44319"/>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_quartos_registrados}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="340" y="95" width="190" height="30" forecolor="#030000" backcolor="#8A8A8A" uuid="63fae8e9-3330-4582-83e9-9fb56b27660d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="390" y="98" width="90" height="25" uuid="bde2deaa-fad3-4e2f-b323-a88c4be30265"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Media]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="340" y="125" width="190" height="30" uuid="7bed6f6b-4ea1-4ead-ba03-fe1ad1e0668d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="397" y="125" width="73" height="30" uuid="15443efc-f86a-4afa-a408-e2c833890a17"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quartos_por_hotel}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="24" y="175" width="116" height="30" uuid="8e8d8349-f4d8-4c12-8e09-0998e4a1b5be"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Id do Hotel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="175" width="140" height="30" uuid="83d36e09-76f6-45c8-b4da-0c96e7fdb152"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Numero Quarto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="175" width="130" height="30" uuid="941219db-8636-4aec-a10f-8620673d6f45"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="175" width="130" height="30" uuid="5177dd85-4763-4aac-88c1-3ac3513ded6b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Nome do Hotel]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="410" y="0" width="130" height="20" uuid="26d2a87c-10ac-411f-9584-fa56ebdc6f0d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nome_hotel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="140" height="20" uuid="b79d82a3-7c66-495f-956b-c3c3bc39c648"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Numero_quarto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="24" y="0" width="116" height="20" uuid="0da07027-1542-4f58-ae3e-0536954d5568"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id_hotel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="130" height="20" uuid="99c59a98-a1d1-4cea-af81-b9e18c6c055c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{preco}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="100" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="390" y="60" width="150" height="20" forecolor="#000000" uuid="f8570c2f-4404-4725-885a-4eb3c26abb4a"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totaal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f2a87a6-8303-4370-b07c-33e9000f2211">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<parameter name="P1" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[
+SELECT h.Nome AS NomeHotel, q.Numero_quarto AS NumeroQuarto, q.preco AS PrecoQuarto, total_quartos.TotalQuartos
+FROM hotel h
+INNER JOIN quartos q ON h.id_hotel = q.id_hotel
+INNER JOIN (
+    SELECT id_hotel, COUNT(*) AS TotalQuartos
+    FROM quartos
+    GROUP BY id_hotel
+) AS total_quartos ON h.id_hotel = total_quartos.id_hotel
+WHERE h.id_hotel = $P{P1}]]>
+	</queryString>
+	<field name="NomeHotel" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NomeHotel"/>
+		<property name="com.jaspersoft.studio.field.label" value="NomeHotel"/>
+	</field>
+	<field name="NumeroQuarto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NumeroQuarto"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumeroQuarto"/>
+	</field>
+	<field name="PrecoQuarto" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="PrecoQuarto"/>
+		<property name="com.jaspersoft.studio.field.label" value="PrecoQuarto"/>
+	</field>
+	<field name="TotalQuartos" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="TotalQuartos"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalQuartos"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="0" width="595" height="90" forecolor="#662E2D" backcolor="#A15E5C" uuid="2a17ab3f-51aa-4d68-9126-847160a2c416"/>
+				<graphicElement>
+					<pen lineColor="#994F4D"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="190" y="10" width="180" height="30" uuid="5f94ce62-e370-4eec-b7ed-3fb8c8fb3d0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Total de Quartos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="50" width="220" height="30" uuid="8fa2faa4-c780-4d89-8c46-b9c013f684c3"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NomeHotel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="80" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="10" width="80" height="21" backcolor="#A15E5C" uuid="4b365f69-155f-42c6-8bc2-b7b494c52579"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="30" width="80" height="30" uuid="31d6325f-cf51-49e7-a793-b964a4c33fcc"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="11" width="60" height="20" uuid="3822a32c-e5bc-49a5-9a6b-cf98276bfc09"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="30" width="80" height="30" uuid="01fd1f2c-214c-4a1c-88d8-f77a08d92d62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TotalQuartos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="50" width="100" height="30" uuid="0855b1e9-7a2e-4eb1-8eb1-ee5557f24395"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="50" width="100" height="30" uuid="a67246c9-7bdd-40ed-9ad7-a469751b503d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Preço]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="21556303-1b90-4a31-91b4-f8053d40ee67">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="351e18f4-cbd1-490f-8c3e-6e6b0115d14b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NumeroQuarto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="30" uuid="18e1686f-4a39-4857-ab39-f4f5ca2cf552">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="983a1c95-1dd3-4798-8185-9bf024c1228e"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PrecoQuarto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="180" y="30" width="200" height="1" uuid="b54c14a4-ea63-4dd8-805a-25e1d6bffa28"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
